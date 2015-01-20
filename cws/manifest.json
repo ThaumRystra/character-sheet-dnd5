@@ -1,0 +1,16 @@
+{
+  "name" : "Realtime D&D 5e Character Sheet",
+  "version" : "1",
+  "manifest_version": 2,
+  "description" : "A cloud based, collaborative editing character sheet for D&D 5.",
+  "container" : "GOOGLE_DRIVE",
+  "api_console_project_id" : "840867953062",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app" : {
+    "launch" : {
+      "web_url" : "https://character-sheet-dnd5.appspot.com/"
+    }
+  }
+}

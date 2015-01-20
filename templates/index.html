@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=9">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+		 <meta name="viewport" content="width=device-width">
+        <meta name="google-site-verification" content="HAjY2U1_HutuLBG33yEQP2ajMaRsYNUSk4aHi3qqHaM" />
+        <meta name="description"
+              content="The D&amp;D 5e Character sheet lets you keep a collaborative character sheet stored in Google Drive." />
+        <meta name="keywords"
+              content="d&amp;d, character, sheet, 5, 5e, dungeons, dragons, realtime, google, drive" />
+        <title id="title">D&amp;D Character sheet</title>
+
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css">
+        <!--<link rel="stylesheet" href="css/main.css" type="text/css" media="screen" > -->
+        <link rel="stylesheet" href="css/characterSheet.css" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+        <!--Google Realtime Stuff-->
+        <script type="text/javascript" src="//www.google.com/jsapi"></script>
+        <script type="text/javascript" src="//apis.google.com/js/api.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/realtime-client-utils.js"></script>
+        <script type="text/javascript" src="js/ddcs.js"></script>
+        <script type="text/javascript" src="js/ddcs.log.js"></script>
+        <script type="text/javascript" src="js/ddcs.collaborators.js"></script>
+        <script type="text/javascript" src="js/ddcs.ui.js"></script>
+        <script type="text/javascript" src="js/ddcs.settings.js"></script>
+        <script type="text/javascript" src="js/ddcs.experience.js"></script>
+        <script type="text/javascript" src="js/ddcs.levels.js"></script>
+        <script type="text/javascript" src="js/ddcs.spells.js"></script>
+        <script type="text/javascript" src="js/ddcs.attacks.js"></script>
+        <script type="text/javascript" src="js/ddcs.strings.js"></script>
+        <script type="text/javascript" src="js/ddcs.inventory.js"></script>
+        <script type="text/javascript" src="js/ddcs.layout.js"></script>
+        <script type="text/javascript" src="js/ddcs.map.js"></script>
+    </head>
+
+    <body>
+        <div class="dontPrint" id="rightBox">
+            <div id="showRightBox"></div>
+            <div class="scrollLink" data-destination="body">Top</div>
+            <div class="scrollLink" data-destination="#abilityContainer">Ability Scores</div>
+            <div class="scrollLink" data-destination="#saveContainer">Saving Throws</div>
+            <div class="scrollLink" data-destination="#skillsHead">Skills</div>
+            <div class="scrollLink" data-destination="#stats">Statistics</div>
+            <div class="scrollLink" data-destination="#hitDice">Hit Dice</div>
+            <div class="scrollLink" data-destination="#proficiencies">Proficiencies</div>
+            <div class="scrollLink" data-destination="#attacksAndCasting">Attacks</div>
+            <div class="scrollLink" data-destination="#featsAndTraits">Features</div>
+            <div class="scrollLink" data-destination="#inventory">Inventory</div>
+            <div class="scrollLink" data-destination="#descriptionBox">Description</div>
+            <div class="scrollLink" data-destination="#backstoryBox">Backstory</div>
+            <div id="spellCastingLink" class="scrollLink" data-destination="#spellCasting">Spellcasting</div>
+            <div class="scrollLink" data-destination="#notesBox">Notes</div>
+            <div class="scrollLink" data-destination="#levelsBox">Levels</div>
+            <div class="scrollLink" data-destination="#xpBox">Experience</div>
+        </div>
+        <div class="dontPrint">
+            <div class="inline" style="margin-bottom: 16px">
+                <div class="rp-social"></div>
+                <a href="https://plus.google.com/113165040357050627956" rel="publisher" target="_top" style="text-decoration:none;">
+                    <img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="position:relative;top:12px;border:0;width:32px;height:32px;"/>
+                </a>
+                <button id="demoAuthorizeButton" disabled class="rp-button rp-button-submit">Authorize</button>
+                <button id="createNewDoc" class="rp-button rp-button-red disabled">Create</button>
+                <button id="openExistingDoc" class="rp-button rp-button-submit disabled">Open</button>
+                <button id="demoShareButton" class="rp-button rp-button-share disabled">Share</button>
+                <button id="settingsButton" class="rp-button rp-button-settings disabled">Settings</button>
+            </div>
+            <div>
+                <button id="undoButton" disabled class="rp-button">Undo</button>
+                <button id="redoButton" disabled class="rp-button">Redo</button>
+                <div id="collaborators" class="inline" style="margin-left: 50px;"></div>
+            </div>
+            <div id="message"></div>
+            <div id="settings" class="inline group" style="display: none;">
+                <h2>Settings</h2>
+                <div style="padding: 10px;">
+                    <input id="ShowSpellCasting" type="checkbox"><label for="ShowSpellCasting"> Show Spellcasting</label><br>
+                    <input id="ShowUnusedCastingLevels" type="checkbox"><label for="ShowUnusedCastingLevels"> Show Unused Spell Levels</label><br>
+                    <input id="ShowUnsusedHitDice" type="checkbox"><label for="ShowUnsusedHitDice"> Show Unused Hit Dice</label><br>
+                    <input id="ShowThirdMaxWeight" type="checkbox"><label for="ShowThirdMaxWeight"> Show max weight using variant encumbrance (Strength * 5)</label><br>
+                    <input id="UseNumericalProficiencies" type="checkbox"><label for="UseNumericalProficiencies"> Numerical proficiencies</label><br>
+                    <input id="SelectBackgroundColor" type="color"><label for="SelectBackgroundColor"> Background Color</label>
+                </div>
+            </div>
+        </div>
+        <div id="mainContent" class="disabled">
+
+            <div id="documentNameContainer" style="display:none;">
+                <input type="text" name="documentName" id="documentName" title="Character Name" style="margin-left: 5px;" value="" disabled="disabled" placeholder="...">
+            </div>
+            <div id="masonryDiv">
+                <div id="abilityColumn" class="inline">
+                    <div id="abilityContainer" class="inline statHolder">
+                        <div class="squareStat hasMod">Strength
+                            <div>
+                                <input id="Strength" class="bigNumber" type="number" autocomplete="off"  min="1" max="30" step="1" value="8">
+                            </div>
+                            <div id="strMod" class="littleNumber get-StrengthMod">?</div>
+                        </div>
+                        <div class="squareStat hasMod">Dexterity
+                            <div>
+                                <input id="Dexterity" class="bigNumber" type="number" autocomplete="off"  min="1" max="30" step="1" value="8">
+                            </div>
+                            <div id="dexMod" class="littleNumber get-DexterityMod">?</div>
+                        </div>
+                        <div class="squareStat hasMod">Constitution
+                            <div>
+                                <input id="Constitution" class="bigNumber" type="number" autocomplete="off"  min="1" max="30" step="1" value="8">
+                            </div>
+                            <div id="conMod" class="littleNumber get-ConstitutionMod">?</div>
+                        </div>
+                        <div class="squareStat hasMod">Intelligence
+                            <div>
+                                <input id="Intelligence" class="bigNumber" type="number" autocomplete="off"  min="1" max="30" step="1" value="8">
+                            </div>
+                            <div id="intelMod" class="littleNumber get-IntelligenceMod">?</div>
+                        </div>
+                        <div class="squareStat hasMod">Wisdom
+                            <div>
+                                <input id="Wisdom" class="bigNumber" type="number" autocomplete="off"  min="1" max="30" step="1" value="8">
+                            </div>
+                            <div id="wisMod" class="littleNumber get-WisdomMod">?</div>
+                        </div>
+                        <div class="squareStat hasMod">Charisma
+                            <div>
+                                <input id="Charisma" class="bigNumber" type="number" autocomplete="off"  min="1" max="30" step="1" value="8">
+                            </div>
+                            <div id="chaMod" class="littleNumber get-CharismaMod">?</div>
+                        </div>
+                    </div><div id="saveContainer" class="inline group">
+                        <h2>Saving Throws</h2>
+                        <div class="modLine"><input id="StrengthSaveProf" type="checkbox" class="profInput"><span class="inlineMod get-StrengthSave" id="strSaveMod">?</span> Strength</div>
+                        <div class="modLine"><input id="DexteritySaveProf" type="checkbox" class="profInput"><span class="inlineMod get-DexteritySave" id="dexSaveMod">?</span> Dexterity</div>
+                        <div class="modLine"><input id="ConstitutionSaveProf" type="checkbox" class="profInput"><span class="inlineMod get-ConstitutionSave" id="conSaveMod">?</span> Constitution</div>
+                        <div class="modLine"><input id="IntelligenceSaveProf" type="checkbox" class="profInput"><span class="inlineMod get-IntelligenceSave" id="intelSaveMod">?</span> Intelligence</div>
+                        <div class="modLine"><input id="WisdomSaveProf" type="checkbox" class="profInput"><span class="inlineMod get-WisdomSave" id="wisSaveMod">?</span> Wisdom</div>
+                        <div class="modLine"><input id="CharismaSaveProf" type="checkbox" class="profInput"><span class="inlineMod get-CharismaSave" id="chaSaveMod">?</span> Charisma</div>
+                        <h2 id="skillsHead" style="margin-top: 10px;">Skills</h2>
+                        <div class="">
+                            <div class="modLine">
+                                <input id="AcrobaticsProf" type="checkbox" class="profInput"><span class="inlineMod get-AcrobaticsMod" id="acrobaticsMod" title="Dexterity">?</span>
+                                Acrobatics
+                                <span class="profMultiplier" style="display:none;"> &times; <input id="AcrobaticsProfMultiplier" class="multiplier" type="number"></span>
+                            </div>
+                            <div class="modLine">
+                                <input id="AnimalHandlingProf" type="checkbox" class="profInput"><span class="inlineMod get-AnimalHandlingMod" id="animalHandlingMod" title="Wisdom">?</span>
+                                Animal Handling
+                            </div>
+                            <div class="modLine">
+                                <input id="ArcanaProf" type="checkbox" class="profInput"><span class="inlineMod get-ArcanaMod" id="arcanaMod" title="Intelligence">?</span>
+                                Arcana
+                            </div>
+                            <div class="modLine">
+                                <input id="AthleticsProf" type="checkbox" class="profInput"><span class="inlineMod get-AthleticsMod" id="athleticsMod">?</span>
+                                Athletics
+                            </div>
+                            <div class="modLine">
+                                <input id="DeceptionProf" type="checkbox" class="profInput"><span class="inlineMod get-DeceptionMod" id="deceptionMod">?</span>
+                                Deception
+                            </div>
+                            <div class="modLine">
+                                <input id="HistoryProf" type="checkbox" class="profInput"><span class="inlineMod get-HistoryMod" id="historyMod">?</span>
+                                History
+                            </div>
+                            <div class="modLine">
+                                <input id="InsightProf" type="checkbox" class="profInput"><span class="inlineMod get-InsightMod" id="insightMod">?</span>
+                                Insight
+                            </div>
+                            <div class="modLine">
+                                <input id="IntimidationProf" type="checkbox" class="profInput"><span class="inlineMod get-IntimidationMod" id="intimidationMod">?</span>
+                                Intimidation
+                            </div>
+                            <div class="modLine">
+                                <input id="InvestigationProf" type="checkbox" class="profInput"><span class="inlineMod get-InvestigationMod" id="investigationMod">?</span>
+                                Investigation
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="modLine"><input id="MedicineProf" type="checkbox" class="profInput"><span class="inlineMod get-MedicineMod" id="medicineMod">?</span> Medicine</div>
+                            <div class="modLine"><input id="NatureProf" type="checkbox" class="profInput"><span class="inlineMod get-NatureMod" id="natureMod">?</span> Nature</div>
+                            <div class="modLine"><input id="PerceptionProf" type="checkbox" class="profInput"><span class="inlineMod get-PerceptionMod" id="perceptionMod">?</span> Perception</div>
+                            <div class="modLine"><input id="PerformanceProf" type="checkbox" class="profInput"><span class="inlineMod get-PerformanceMod" id="performanceMod">?</span> Performance</div>
+                            <div class="modLine"><input id="PersuasionProf" type="checkbox" class="profInput"><span class="inlineMod get-PersuasionMod" id="persuasionMod">?</span> Persuasion</div>
+                            <div class="modLine"><input id="ReligionProf" type="checkbox" class="profInput"><span class="inlineMod get-ReligionMod" id="religionMod">?</span> Religion</div>
+                            <div class="modLine"><input id="SleightOfHandProf" type="checkbox" class="profInput"><span class="inlineMod get-SleightOfHandMod" id="sleightOfHandMod">?</span> Sleight of Hand</div>
+                            <div class="modLine"><input id="StealthProf" type="checkbox" class="profInput"><span class="inlineMod get-StealthMod" id="stealthMod">?</span> Stealth</div>
+                            <div class="modLine"><input id="SurvivalProf" type="checkbox" class="profInput"><span class="inlineMod get-SurvivalMod" id="survivalMod">?</span> Survival</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="statColumn" class="inline">
+                    <div id="stats" class="statHolder" style="text-align: center">
+                        <div class="inline squareStat hasMod">Hit Points
+                            <div>
+                                <input id="HitPoints" class="longBigNumber" type="number" autocomplete="off"  min="0" max="999" step="1" value="10">
+                            </div>
+                            <div id="maxHp" title="Max HP from levels gained" class="littleNumber">?</div>
+                        </div><div class="inline squareStat">Armor Class
+                            <div>
+                                <input id="ArmorClass" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="8">
+                            </div>
+                        </div><div class="inline squareStat">Initiative
+                            <div id="initiative" class="bigNumber get-DexterityMod">?</div>
+                        </div><div class="inline squareStat">Proficiency<br>Bonus
+                            <div>
+                                <input id="ProficiencyBonus" class="bigNumber" type="number" autocomplete="off"  min="2" max="99" step="1" value="2">
+                            </div>
+                        </div><div class="inline squareStat">Speed<br>&nbsp;
+                            <div>
+                                <input id="Speed" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="30">
+                            </div>
+                        </div><div class="inline squareStat">Passive<br>Perception
+                            <div id="passivePerception" class="bigNumber calculate" data-calculation="10 + PerceptionMod">?</div>
+                        </div>
+                        <div>
+                            <div class="inline squareStat" style="padding: 6px 20px;">
+                                <div class="inline" style="margin-right: 10px; font-weight: bold; vertical-align: middle;">
+                                    <p>Death Saves</p>
+                                </div>
+                                <div class="inline">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <span style="margin-right: 10px">Successes</span>
+                                            </td><td>
+                                                <input id="DeathSavePass0" type="checkbox" style="margin-right: 10px">
+                                            </td><td>
+                                                <input id="DeathSavePass1" type="checkbox" style="margin-right: 10px">
+                                            </td><td>
+                                                <input id="DeathSavePass2" type="checkbox">
+                                            </td>
+                                        </tr><tr>
+                                            <td>
+                                                <span style="margin-right: 10px">Failures</span>
+                                            </td><td>
+                                                <input id="DeathSaveFail0" type="checkbox" style="margin-right: 10px">
+                                            </td><td>
+                                                <input id="DeathSaveFail1" type="checkbox" style="margin-right: 10px">
+                                            </td><td>
+                                                <input id="DeathSaveFail2" type="checkbox">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="inline squareStat">Inspiration
+                            <div>
+                                <input id="Inspiration" class="bigNumber" type="number" autocomplete="off"  min="0" max="1" step="1" value="0">
+                            </div>
+                        </div>
+                        -->
+                    </div><div id="hitDice" class="inline group" style="width: auto">
+                        <h2>Hit Dice</h2>
+                        <div id="d6HitDice">
+                            <div class="inline">
+                                <input id="D6HitDice" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                            </div>
+                            <div class="inline bigNumber">
+                                d6
+                            </div>
+                            <div class="inline bigNumber get-ConstitutionMod"></div>
+                            <div style="text-align: left;">
+                                Max <input id="D6HitDiceMax" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                            </div>
+                        </div>
+                        <div id="d8HitDice">
+                            <div class="inline">
+                                <input id="D8HitDice" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                            </div>
+                            <div class="inline bigNumber">
+                                d8
+                            </div>
+                            <div class="inline bigNumber get-ConstitutionMod"></div>
+                            <div style="text-align: left;">
+                                Max <input id="D8HitDiceMax" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                            </div>
+                        </div>
+                        <div  id="d10HitDice">
+                            <div class="inline">
+                                <input id="D10HitDice" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                            </div>
+                            <div class="inline bigNumber">
+                                d10
+                            </div>
+                            <div class="inline bigNumber get-ConstitutionMod"></div>
+                            <div style="text-align: left; height: 30px">
+                                Max <input id="D10HitDiceMax" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                            </div>
+                        </div>
+                        <div  id="d12HitDice">
+                            <div class="inline">
+                                <input id="D12HitDice" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                            </div>
+                            <div class="inline bigNumber">
+                                d12
+                            </div>
+                            <div class="inline bigNumber get-ConstitutionMod"></div>
+                            <div style="text-align: left; height: 30px">
+                                Max <input id="D12HitDiceMax" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                            </div>
+                        </div>
+                    </div><div id="proficiencies" class="inline group" style="width: 160px">
+                        <h2>Proficiencies</h2>
+                        <div id="proficiency" contenteditable="true"></div>
+                    </div>
+                </div>
+                <div id="statColumn" class="inline">
+                    <div id="attacksAndCasting" class="group">
+                        <h2>Attacks and Spellcasting</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 60px">Attack</th><th style="min-width: 50px">Bonus</th><th style="min-width: 50px">Damage</th><th style="min-width: 40px">Type</th><th></th>
+                                </tr>
+                            <tbody id="attackTable">
+
+                            </tbody>
+                            <tbody><tr><td><button id="addAttackButton" class="addButton" type="button"></button></td></tr></tbody>
+                        </table>
+                        <div id="attackBox" class="notebook" contenteditable="true" style="margin-top: 14px; min-height: 1em;">
+
+                        </div>
+                    </div><div id="featsAndTraits" class="group">
+                        <h2>Features and Traits</h2>
+                        <div id="features" class="notebook" contenteditable="true"></div>
+                    </div>
+                </div>
+                <div id="inventory" class="inline group">
+                    <h2>
+                        Inventory 
+                        <span id="weightCarried"></span>
+                        /
+                        <span id="maxWeight" class="calculate" data-calculation="Strength * 15"></span>
+                        <span id="thirdMaxWeight" class="calculate" data-calculation="Strength * 5" style="display:none"></span>
+                        lbs
+                        <span id="weightWarning"></span>
+                    </h2>
+                    <div id="itemList">
+
+                    </div>
+                    <div style="margin-top: 14px">
+                        <table>
+                            <tr>
+                                <td style="min-width: 70px"><button id="showItemButton" type="button">Add Item</button></td><td style="min-width: 70px"><button id="showGroupButton" type="button">Edit Groups</button></td>
+                            </tr>
+                        </table>
+                        <div id="addItem" style="display: none;">
+                            <table>
+                                <tr>
+                                    <td><label for="itemQuantity">Quantity</label></td><td style="text-align: left;"><input id="itemQuantity" class="editTable" type="number" min="0" value="1" style="width:50px"></td>
+                                </tr><tr>
+                                    <td><label for="itemName">Item Name</label></td><td style="text-align: left;"><input id="itemName" class="editTable" type="text"></td>
+                                </tr><tr>
+                                    <td><label for="itemWeight">Weight</label></td><td style="text-align: left;"><input id="itemWeight" class="editTable" type="number" min="0" value="0" style="width:50px">lbs</td>
+                                </tr><tr>
+                                    <td><label for="itemValue">Value</label></td><td style="text-align: left;"><input id="itemValue" class="editTable" type="text" placeholder="12gp 3cp etc."></td>
+                                </tr><tr>
+                                    <td><label for="itemGroup">Group</label></td><td style="text-align: left;"><select id="itemGroup" class="editTable"></select></td>
+                                </tr><tr>
+                                    <td>
+                                        <label for="itemOrder">Order</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="itemOrder" class="editTable" type="number" min="0" value="0" max="100" style="width:50px" title="Use a higher number to make the item appear first in the list">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div>Description</div>
+                            <div id="itemDescription" class="editTable notebook" contenteditable="true" style="min-height: 30px;"></div>
+                            <button id="addItemButton" type="button">Add</button><button  id="clearItemButton" type="button">Clear</button>
+                        </div>
+                        <div id="addGroup" style="display: none;">
+                            <div>
+                                <label for="groupName">Group Name </label><input id="groupName" class="editTable" type="text"><br>
+                                <button id="addGroupButton" type="button">Add</button>
+                            </div>
+                            <div>
+                                <select id="itemGroup2" class="editTable"></select><button id="deleteGroupButton" type="button" title="Delete a group and all items in it">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div><div id="descriptionBox" class="inline group">
+                    <h2>Description</h2>
+                    <div id="description" class="stringGroup notebook" contenteditable="true"></div>
+                    <h2>Personality Traits</h2>
+                    <div id="personality" class="stringGroup notebook" contenteditable="true"></div>
+                    <h2>Ideals</h2>
+                    <div id="ideals" class="stringGroup notebook" contenteditable="true"></div>
+                    <h2>Bonds</h2>
+                    <div id="bonds" class="stringGroup notebook" contenteditable="true"></div>
+                    <h2>Flaws</h2>
+                    <div id="flaws" class="stringGroup notebook" contenteditable="true"></div>
+                </div><div id="backstoryBox" class="inline group">
+                    <h2>Backstory</h2>
+                    <div id="story" class="notebook" contenteditable="true"></div>
+                </div>
+                <div id="spellCasting">
+                    <div  class="statHolder" style="max-width:600px;">
+                        <div id="castAbilities">
+                            <div>
+                                <div class="inline squareStat">Spellcasting Ability
+                                    <div>
+                                        <input class="longBigNumber" type="text" autocomplete="off" value="Int">
+                                    </div>
+                                </div>
+                                <div class="inline squareStat">Spell Save DC
+                                    <div>
+                                        <input class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="8">
+                                    </div>
+                                </div>
+                                <div class="inline squareStat">Spell Attack Bonus
+                                    <div>
+                                        <input class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="castAbilitiesButton" class="addButton" type="button"></button>
+                    </div>
+                    <div id="cantripsBox" class="inline group">
+                        <h2>Cantrips</h2>
+                        <div class="center">
+                        </div>
+                        <div class="spellList" id="cantrips">
+                        </div>
+                        <div>
+                            <button id="cantripButton" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level1SpellsBox" class="inline group">
+                        <h2>Level 1</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level1Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level1MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level1Spells">
+                        </div>
+                        <div>
+                            <button id="level1Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level2SpellsBox" class="inline group">
+                        <h2>Level 2</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level2Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level2MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level2Spells">
+                        </div>
+                        <div>
+                            <button id="level2Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level3SpellsBox" class="inline group">
+                        <h2>Level 3</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level3Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level3MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level3Spells">
+                        </div>
+                        <div>
+                            <button id="level3Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level4SpellsBox" class="inline group">
+                        <h2>Level 4</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level4Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level4MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level4Spells">
+                        </div>
+                        <div>
+                            <button id="level4Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level5SpellsBox" class="inline group">
+                        <h2>Level 5</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level5Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level5MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level5Spells">
+                        </div>
+                        <div>
+                            <button id="level5Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level6SpellsBox" class="inline group">
+                        <h2>Level 6</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level6Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level6MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level6Spells">
+                        </div>
+                        <div>
+                            <button id="level6Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level7SpellsBox" class="inline group">
+                        <h2>Level 7</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level7Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level7MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level7Spells">
+                        </div>
+                        <div>
+                            <button id="level7Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level8SpellsBox" class="inline group">
+                        <h2>Level 8</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level8Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level8MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level8Spells">
+                        </div>
+                        <div>
+                            <button id="level8Button" class="addButton" type="button"></button>
+                        </div>
+                    </div><div id="level9SpellsBox" class="inline group">
+                        <h2>Level 9</h2>
+                        <div class="center">
+                            <div class="inline squareStat spellSlot">
+                                <div>
+                                    <input id="level9Slots" class="bigNumber" type="number" autocomplete="off"  min="0" max="99" step="1" value="0">
+                                </div>
+                                <div>
+                                    Max <input id="level9MaxSlots" class="littleNumber" type="number" autocomplete="off" min="0" max="99" step="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spellList" id="level9Spells">
+                        </div>
+                        <div>
+                            <button id="level9Button" class="addButton" type="button"></button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="notesBox" class="inline group">
+                        <h2>Notes</h2>
+                        <div id="notes" class="notebook" contenteditable="true"></div>
+                    </div>
+                    <div id="levelsBox" class="inline group">
+                        <h2>Levels</h2>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 60px;">Class</th><th style="min-width: 40px;">Level</th><th style="min-width: 40px;">HP</th><th style="min-width: 110px;">Features Gained</th><th style="width: 25px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="levels">
+
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td id="clsInput" class="editTable" title="Class leveled" contenteditable="true"></td>
+                                        <td id="levelInput" class="editTable" title="Level Gained" contenteditable="true"></td>
+                                        <td id="hpGainedInput" class="editTable" title="Hit Points Rolled" contenteditable="true"></td>
+                                        <td id="featuresGainedInput" class="editTable notebook" title="Features Gained" contenteditable="true"></td>
+                                        <td><button id="addLevelButton" class="addButton"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="xpBox" class="inline group">
+                        <h2 id="xpHeading">Experience</h2>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 150px;">Event</th><th style="min-width: 30px;">XP</th><th style="min-width: 25px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="eventInput" class="editTable" title="Event Experienced notebook" contenteditable="true"></td>
+                                        <td id="xpInput" class="editTable" title="Experience Points Gained" contenteditable="true"></td>
+                                        <td><button id="addExperienceButton" class="addButton"></button></td>
+                                    </tr>
+                                </tbody>
+                                <tbody id="experience">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div>
+                <h3>Log</h3>
+                <input id="filterLocal" type="checkbox">Hide own changes
+                <div id="demoLog"></div>
+            </div>
+            -->
+        </div>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-53563925-1', 'auto');
+            ga('require', 'displayfeatures');
+            ga('send', 'pageview');
+
+        </script>
+    </body>
+</html>
