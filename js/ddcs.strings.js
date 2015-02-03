@@ -73,7 +73,7 @@ ddcs.strings.loadField = function() {
         var string = ddcs.strings.array[i];
         string.field = ddcs.getField(string.name);
     }
-    console.log('strings loadfield');
+    //console.log('strings loadfield');
 };
 
 ddcs.strings.initializeModel = function(model) {
@@ -82,7 +82,7 @@ ddcs.strings.initializeModel = function(model) {
         var field = model.createString(string.startValue);
         model.getRoot().set(string.name, field);
     }
-    console.log('strings initialized model');
+    //console.log('strings initialized model');
 };
 
 ddcs.strings.updateUi = function() {
@@ -90,11 +90,11 @@ ddcs.strings.updateUi = function() {
         var string = ddcs.strings.array[i];
         string.updateUi();
     }
-    console.log('strings updateUi');
+    //console.log('strings updateUi');
 };
 
 ddcs.strings.connectUi = function() {
-    console.log('strings connectUI');
+    //console.log('strings connectUI');
     for (var i in ddcs.strings.array) {
         (function(i) {
             var string = ddcs.strings.array[i];
@@ -114,7 +114,7 @@ ddcs.strings.connectUi = function() {
 };
 
 ddcs.strings.connectRealtime = function() {
-    console.log('strings connectRealtime');
+    //console.log('strings connectRealtime');
     for (var i in ddcs.strings.array) {
         (function(i) {
             var string = ddcs.strings.array[i];

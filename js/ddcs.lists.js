@@ -91,7 +91,7 @@ ddcs.lists.array = [
 ];
 
 ddcs.lists.loadField = function() {
-    console.log('lists initialize model');
+    //console.log('lists initialize model');
     for (var i in ddcs.lists.array) {
         var list = ddcs.lists.array[i];
         list.field = ddcs.getField(list.key);
@@ -99,7 +99,7 @@ ddcs.lists.loadField = function() {
 };
 
 ddcs.lists.initializeModel = function(model) {
-    console.log('lists initialize model');
+    //console.log('lists initialize model');
     for (var i in ddcs.lists.array) {
         var list = ddcs.lists.array[i];
         var field = model.createList();
@@ -109,7 +109,7 @@ ddcs.lists.initializeModel = function(model) {
 };
 
 ddcs.lists.updateUi = function() {
-    console.log('lists update ui');
+    //console.log('lists update ui');
     for (var i in ddcs.lists.array) {
         var list = ddcs.lists.array[i];
         list.updateUi();
@@ -117,7 +117,7 @@ ddcs.lists.updateUi = function() {
 };
 
 ddcs.lists.connectUi = function() {
-    console.log('lists connect ui');
+    //console.log('lists connect ui');
     for (var i in ddcs.lists.array) {
         var list = ddcs.lists.array[i];
         $('#' + list.key + 'addButton').click(list.onAddItem);
@@ -125,7 +125,7 @@ ddcs.lists.connectUi = function() {
 };
 
 ddcs.lists.connectRealtime = function() {
-    console.log('lists connect realtime');
+    //console.log('lists connect realtime');
     for (var i in ddcs.lists.array) {
         var list = ddcs.lists.array[i];
         (function(i) {
@@ -134,5 +134,5 @@ ddcs.lists.connectRealtime = function() {
             list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, ddcs.lists.array[i].onRealtimeRemove);
         })(i);
     }
-    console.log('lists end connect realtime');
+    //console.log('lists end connect realtime');
 };

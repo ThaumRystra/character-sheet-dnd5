@@ -77,7 +77,7 @@ rtclient.getParams = function() {
     params.state = state;
   }
 
-  console.log(params);
+  //console.log(params);
   return params;
 }
 
@@ -164,7 +164,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
       user_id: userId,
       immediate: false
     }, handleAuthResult);
-    console.log(clientId);
+    //console.log(clientId);
   };
 
   // Try with no popups first.

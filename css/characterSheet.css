@@ -3,12 +3,12 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : 15 Jul 2014, 7:31:47 AM
     Author     : Stefan.Zermatten
 */
 
-body 
+body
 {
     background: linear-gradient(rgb(255, 255, 255), rgb(140, 140, 170));
     height: 100%;
@@ -95,6 +95,10 @@ h3
 
 #showRightBox:hover {
     background: #DCDCDC;
+}
+
+#inventory {
+    width: 400px;
 }
 
 .disabled{
@@ -285,17 +289,17 @@ div.center
     text-align: center;
 }
 
-tbody td 
-{ 
+tbody td
+{
     text-align: center;
     word-wrap: break-word;
 }
-tbody td:first-child 
-{ 
+tbody td:first-child
+{
     text-align: left ;
 }
 
-th 
+th
 {
     text-align: center;
     font-weight: bold;
@@ -312,8 +316,8 @@ td.indent
     font-size:0.8em;
 }
 
-table 
-{ 
+table
+{
     width: 100%;
     word-break: break-all;
 }

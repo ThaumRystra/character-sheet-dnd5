@@ -87,7 +87,7 @@ ddcs.settings.updateShowUnusedSpells = function(value) {
     if (!show &&
             $('#cantrips').children().length === 0) {
         $('#cantripsBox').hide();
-        console.log('hiding cantrips');
+        //console.log('hiding cantrips');
     } else {
         $('#cantripsBox').show();
     }

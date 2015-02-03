@@ -57,8 +57,8 @@ ddcs.updateUi = function() {
 
 // Called when the realtime file has been loaded.
 ddcs.onFileLoaded = function(doc) {
-    console.log('File loaded');
-    console.log(doc);
+    //console.log('File loaded');
+    //console.log(doc);
     ddcs.realtimeDoc = doc;
     // Binding UI and listeners for demo data elements.
     for (var i = 0; i < ddcs.allDemos.length; i++) {
@@ -136,7 +136,7 @@ ddcs.registerTypes = function() {
             registerTypes();
         }
     }
-    console.log(ddcs);
+    //console.log(ddcs);
 };
 
 // Opens the Google Picker.
