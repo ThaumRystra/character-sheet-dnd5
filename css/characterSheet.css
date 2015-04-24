@@ -7,65 +7,295 @@ and open the template in the editor.
     Created on : 15 Jul 2014, 7:31:47 AM
     Author     : Stefan.Zermatten
 */
-
-body
-{
-    background: linear-gradient(rgb(255, 255, 255), rgb(140, 140, 170));
-    height: 100%;
-    margin: 0;
-    padding: 20px;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+body {
+  font-family: "Arial", "Helvetica", sans-serif;
+  font-size: 90%;
+}
+table {
+  width: 100%;
+  text-align: left;
+}
+input[type=checkbox] {
+  position: relative;
+  border: 2px solid #000;
+  border-radius: 2px;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0 5px -3px 0;
+  padding: 0;
+}
+input[type=checkbox]:checked::after {
+  content: url('../images/Check.png');
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: -2px;
+  left: -2px;
+}
+.inlineMod{
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+.deleteButton {
+  background-image: url(/images/smallBin.png);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  padding: 0px;
+  vertical-align: middle;
+}
+.addButton {
+  background-image: url(/images/smallPlus.png);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  padding: 0px;
+  vertical-align: middle;
+}
+#rightBox {
+  position: absolute;
+  right: 0;
+  padding: 5px;
+  border: 10px solid #FA0;
+  background: #FFF;
 }
 
-#mainContent
-{
-    margin: 0;
-    font-family: 'Source Sans Pro', sans-serif;
-    line-height: 1.3;
+.inline {
+  display: inline-block;
+  vertical-align: top;
 }
 
-#settings
-{
-    max-width: none;
-    margin: 0;
-    font-family: 'Source Sans Pro', sans-serif;
-    line-height: 1.3;
+.squareStat{
+  padding: 5px;
+  display: inline-block;
+  border: 3px solid #000;
+  text-align: center;
+  position: relative;
+  background: #FFF;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 15px;
+  border-radius: 10px;
+}
+.bigNumber, .longBigNumber {
+  display: block;
+  border: none;
+  background: none;
+  padding: 0 0 0 17px;
+  margin: 0;
+  line-height: 50px;
+  font-size: 2em;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.littleNumber {
+  font-size: 0.7em;
+  line-height: 25px;
+  border: 1px solid #000;
+  background: #FFF;
+  text-align: center;
+}
+.squareStat .littleNumber {
+  position: absolute;
+  width: 28px;
+  left: 50%;
+  margin-left: -15px;
+  bottom: -15px;
+  z-index: 1;
+}
+.group {
+  border: 3px solid #000;
+  background: #FFF;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.group h2 {
+  background: #000;
+  margin: 10px -10px 10px;
+  padding: 5px 10px;
+  color: #FFF;
+  font-size: 1.1em;
+  font-weight: normal;
+  text-align: center;
+}
+.group h2:first-child {
+  margin: -13px -10px 10px;
+  border-radius: 10px 10px 0 0 ;
+}
+#masonryDiv:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+#masonryDiv > div {
+  box-sizing: border-box;
+  width: 32.5523%;
+  margin-right: 1.16655%;
+  display: inline;
+  float: left;
+  page-break-inside: avoid;
+}
+#masonryDiv > div:nth-child(3n){
+  margin-right: 0;
+}
+#masonryDiv > div:nth-child(3n + 1){
+  clear: both;
+}
+#masonryDiv > #spellCasting,
+#masonryDiv > div:nth-child(8) {
+  width: 100%;
+  margin: 0;
 }
 
-h2
-{
-    background: black;
-    color: white;
-    font-size: 1em;
-    margin: 0px -10px 10px;
-    padding: 2px 15px;
+#abilityColumn:after,
+#statColumn:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
-h3
-{
-    font-size: 1em;
-    font-weight: bold;
-    margin: 0px;
-    padding: 4px 0px;
+#documentName {
+  border: none;
+  background: none;
+  margin: 1em 0;
+  padding: 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+.spellName {
+  border: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 1.2em;
+  line-height: 16px;
+}
+.spellDescription {
+  padding: 0 !important;
+}
+.spellList > div {
+  margin-bottom: 25px !important;
+}
+.spellSlot {
+  width: 33.33%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.spellSlot .littleNumber {
+  position: static;
+  margin: 0;
+  width: auto;
+  padding: 0;
 }
 
-.scrollLink
-{
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 4px;
-    font-family: 'Source Sans Pro', sans-serif;
+/* Specific Columns */
+#abilityColumn {
+  position: relative;
+  padding-left: 15px;
+}
+#abilityContainer {
+  width: 31%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#abilityContainer .squareStat {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+}
+#saveContainer {
+  display: block;
+  margin-left: 33.33%;
+}
+#saveContainer .modLine {
+  margin: 5px 0;
 }
 
-.multiplier{
-    width: 50px;
+#stats .squareStat {
+  width: 31%;
+  margin-right: 3.5%;
+}
+#stats .squareStat:nth-child(3n) {
+  margin-right: 0;
+}
+#stats div .squareStat {
+  width: 100%;
 }
 
-.profInput{
-    width: 30px;
-    font-weight: bold;
+#hitDice, #proficiencies {
+  width: 48.25% !important;
+  box-sizing: border-box;
+  margin-right: 3.5%;
+}
+#proficiencies {
+  margin-right: 0;
+}
+
+#hitDice .inline,
+#hitDice .bigNumber {
+  width: auto;
+  display: inline-block;
+  padding: 0;
+  margin: auto;
+}
+#hitDice .inline input.bigNumber {
+  width: 2em
+}
+
+#spellCasting > div {
+  float: left;
+  box-sizing: border-box;
+  width: 32.5523%;
+  margin-right: 1.16655%;
+}
+#spellCasting > div:nth-child(3n + 1),
+#masonryDiv > div:nth-child(8) > div:nth-child(3) {
+  margin-right: 0;
+}
+#spellCasting .statHolder {
+  width: 100%;
+  max-width: none !important;
+  margin-bottom: 1.16655%;
+}
+#spellCasting .statHolder .squareStat {
+  width: 24.1250875%;
+  margin-right: 1.16655%;
+  margin-bottom: 5px;
+}
+#spellCasting .statHolder .squareStat:nth-child(4n){
+  margin-right: 0;
+}
+
+#masonryDiv > div:nth-child(8) > div {
+  float: left;
+  box-sizing: border-box;
+  width: 49.416725%;
+  margin-right: 1.16655%;
+}
+#masonryDiv > div:nth-child(8) > div:nth-child(1) {
+  margin-right: 0;
+  width: 100%;
+}
+#masonryDiv > div:nth-child(8) > div:nth-child(3) {
+  margin-right: 0;
 }
 
 #rightBox
@@ -97,253 +327,7 @@ h3
     background: #DCDCDC;
 }
 
-#inventory {
-    width: 400px;
-}
 
-.disabled{
-    display: none;
-}
-
-.modLine
-{
-    padding: 2px 10px 2px 0px;
-}
-
-.group
-{
-    border: 2px solid;
-    border-radius: 0px 0px 10px 10px;
-    padding: 0px 10px 10px;
-    margin: 8px;
-    min-width: 150px;
-    max-width: 400px;
-    background: white;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
-}
-
-.statHolder
-{
-    padding: 10px;
-    max-width: 380px;
-}
-
-.squareStat
-{
-    min-width: 85px;
-    text-align: center;
-    margin: 4px;
-    border: 2px solid;
-    border-radius: 10px;
-    background: white;
-    padding: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-.hasMod
-{
-    margin: 0 auto 20px;
-}
-
-.bigNumber
-{
-    text-align: center;
-    line-height: 50px;
-    font-size: 40px;
-    width: 60px;
-}
-
-div.bigNumber
-{
-    margin: 0px auto;
-}
-
-.inlineMod
-{
-    width: 30px;
-    display: inline-block;
-    text-align: center;
-}
-
-.editTable
-{
-    border: rgb(200, 200, 200);
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 3px;
-}
-
-span
-{
-    margin-left: 3px;
-}
-
-input
-{
-    font-family: 'Source Sans Pro', sans-serif;
-    margin: 0px;
-    border: none;
-    background: none;
-    color: black;
-}
-
-input.bigNumber
-{
-    padding: 0px 0px 0px 15px;
-}
-
-input.longBigNumber
-{
-    text-align: center;
-    line-height: 50px;
-    font-size: 40px;
-    width: 100px;
-}
-
-input:disabled
-{
-    background: none;
-    color: black;
-}
-
-.deleteButton {
-    background-image: url(/images/smallBin.png); /* 22px x 22px */
-    background-color: transparent; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: center;  /* equivalent to 'top left' */
-    border: none;           /* assuming we don't want any borders */
-    cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 20px;           /* make this the size of your image */
-    width: 20px;
-    padding: 0px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
-}
-
-.addButton {
-    background-image: url(/images/smallPlus.png); /* 22px x 22px */
-    background-color: transparent; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: center;  /* equivalent to 'top left' */
-    border: none;           /* assuming we don't want any borders */
-    cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 20px;           /* make this the size of your image */
-    width: 20px;
-    padding: 0px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
-}
-
-.littleNumber
-{
-    width: 40px;
-    height: 20px;
-    text-align: center;
-    margin: 0 auto -15px;
-    border: 2px solid;
-    border-radius: 5px;
-    line-height: 20px;
-    background:white;
-}
-
-.modifier
-{
-    text-align: center;
-    width: 30px;
-}
-
-.inline
-{
-    display: inline-block;
-    vertical-align: top;
-}
-
-.coinSquare
-{
-    min-width: 40px;
-    text-align: center;
-    margin: 0 auto 10px;
-    border: 2px solid;
-    border-radius: 10px;
-    padding: 5px;
-}
-
-.coinNumber
-{
-    line-height: 30px;
-    font-size: 25px;
-}
-
-.spellSlot
-{
-    margin: 0px auto 15px;
-
-}
-
-.spellName
-{
-    font-weight: bold;
-    font-size: 1em;
-}
-
-div.center
-{
-    text-align: center;
-}
-
-tbody td
-{
-    text-align: center;
-    word-wrap: break-word;
-}
-tbody td:first-child
-{
-    text-align: left ;
-}
-
-th
-{
-    text-align: center;
-    font-weight: bold;
-    padding: 3px;
-}
-th:first-child
-{
-    text-align: left;
-}
-
-td.indent
-{
-    padding-left: 8px;
-    font-size:0.8em;
-}
-
-table
-{
-    width: 100%;
-    word-break: break-all;
-}
-
-.itemGroup
-{
-    border: black;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 4px;
-}
-
-.itemGroupHeader
-{
-    width: 100%;
-    padding: 10px;
-}
-
-.stringGroup
-{
-    margin-bottom: 10px;
-}
-
-/*------------------------------------------------------------------
-@group Buttons
-------------------------------------------------------------------*/
 
 .rp-button {
     cursor:pointer;
@@ -726,21 +710,59 @@ input[type=checkbox]:focus{
     margin-bottom: 10px;
 }
 
+
+@media screen and (max-width: 1000px) {
+  #masonryDiv > div:nth-child(1),
+  #masonryDiv > div:nth-child(2),
+  #masonryDiv > div:nth-child(4),
+  #masonryDiv > div:nth-child(5){
+    width: 49.416725%;
+  }
+  #masonryDiv > div:nth-child(2),
+  #masonryDiv > div:nth-child(5){
+    margin-right: 0;
+  }
+  #masonryDiv > div:nth-child(3),
+  #masonryDiv > div:nth-child(6){
+    clear: both;
+    width: 100%;
+  }
+  #spellCasting > div {
+    width: 49.416725%;
+  }
+  #spellCasting > div:nth-child(3n+1) {
+    margin-right: 1.16655%;
+  }
+  #spellCasting > div:nth-child(2n+1) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #hitDice, #proficiencies {
+    width: 100% !important;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  #spellCasting > div,
+  #spellCasting > div:nth-child(1n),
+  #masonryDiv > div,
+  #masonryDiv > div:nth-child(1n),
+  #masonryDiv > div:nth-child(8) > div,
+  #masonryDiv > div:nth-child(8) > div:nth-child(1n) {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
 @media print {
-
-    body{
-        background: white !important;
-        -webkit-print-color-adjust: exact;
-    }
-
-    .dontPrint {
-        display: none !important;
-    }
-
-    .group {
-        max-width: none !important;
-        max-height: none !important;
-        box-shadow: none;
-    }
-
+  body {
+    font-size: 60%;
+  }
+  .dontPrint,
+  #LiveCSSEditor-pad {
+    display: none !important;
+  }
 }
